@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>365 Days of Us — One by One</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#ffe6f0,#fff5fa,#ffffff);
+    font-family:'Poppins',sans-serif;overflow:hidden;padding:20px;
+  }
+  .floating-emoji{position:absolute;font-size:1.6rem;opacity:0.18;pointer-events:none;animation:float 6s ease-in-out infinite;}
+  @keyframes float {0%,100%{transform:translateY(0) scale(1);opacity:0.12;}50%{transform:translateY(-16px) scale(1.05);opacity:0.28;}}
+  .card{width:100%;max-width:480px;text-align:center;background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,245,250,0.7));border-radius:18px;padding:22px;box-shadow:0 12px 40px rgba(198,68,123,0.12);backdrop-filter: blur(6px);position:relative;z-index:5;}
+  .title{font-family:'Dancing Script',cursive;color:#d63384;font-size:2rem;margin-bottom:6px}
+  .subtitle{color:#c2457a;margin-bottom:8px;font-weight:600}
+  .image-wrap{width:100%;height:380px;display:flex;align-items:center;justify-content:center;margin:8px 0;position:relative;overflow:hidden;}
+  .image-wrap img{width:92%;max-width:420px;height:100%;max-height:380px;border-radius:14px;object-fit:cover;box-shadow:0 18px 40px rgba(214,51,132,0.18);transition:transform .45s cubic-bezier(.2,.9,.23,1),opacity .35s;transform-origin:center;}
+  .flip-enter{opacity:0;transform:rotateY(90deg) scale(0.9);}
+  .flip-exit{opacity:0;transform:rotateY(-90deg) scale(0.9);}
+  .flip-active{transition:transform 0.55s ease,opacity 0.55s ease;transform:rotateY(0deg) scale(1);opacity:1;}
+  .inner-heart{position:absolute;font-size:1.5rem;opacity:0.22;animation:floatInside 4.5s ease-in-out infinite;pointer-events:none;}
+  @keyframes floatInside{0%{transform:translateY(0px) scale(1);opacity:0.18}50%{transform:translateY(-18px) scale(1.05);opacity:0.32}100%{transform:translateY(0px) scale(1);opacity:0.18}}
+  .quote{margin-top:14px;font-size:1rem;color:#8b2b57;min-height:48px;font-style:italic;animation:quoteFade .6s ease;}
+  @keyframes quoteFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .controls{display:flex;gap:12px;justify-content:center;margin-top:14px}
+  .btn{cursor:pointer;border:0;border-radius:999px;padding:10px 18px;font-weight:700;background: rgba(255,255,255,0.6); color:#d63384; box-shadow:0 8px 20px rgba(214,51,132,0.08);transition: transform .18s ease, box-shadow .18s;}
+  .btn:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(214,51,132,0.18)}
+  .month-label{margin-top:10px;color:#b33a75;font-weight:700}
+  .final{font-family:'Dancing Script',cursive;font-size:1.6rem;color:#c21760;padding:26px;line-height:1.45;text-align:center;}
+  @media(max-width:420px){.image-wrap{height:320px}.title{font-size:1.6rem}}
+</style>
+</head>
+<body>
+
+<!-- FLOATING EMOJIS BACKGROUND -->
+<div class="floating-emoji" style="top:8%; left:6%;">💖</div>
+<div class="floating-emoji" style="top:18%; right:8%;">💋</div>
+<div class="floating-emoji" style="top:62%; left:10%;">🥰</div>
+<div class="floating-emoji" style="top:72%; right:18%;">🌸</div>
+<div class="floating-emoji" style="top:32%; left:82%;">💫</div>
+<div class="floating-emoji" style="top:86%; right:6%;">💌</div>
+<div class="floating-emoji" style="top:14%; left:70%;">🧸</div>
+<div class="floating-emoji" style="top:46%; right:78%;">💖</div>
+<div class="floating-emoji" style="top:88%; left:26%;">🌸</div>
+<div class="floating-emoji" style="top:4%; right:40%;">💫</div>
+
+<div class="card" id="galleryBox">
+  <div class="title">✨ “365 days of us, forever in every memory”</div>
+  <div class="subtitle" id="monthTitle">Month 12 • December</div>
+
+  <div class="image-wrap">
+    <div class="inner-heart" style="top:10%; left:12%">💖</div>
+    <div class="inner-heart" style="top:40%; left:80%">💘</div>
+    <div class="inner-heart" style="top:70%; left:20%">💞</div>
+    <div class="inner-heart" style="top:25%; left:55%">💗</div>
+    <div class="inner-heart" style="top:55%; left:35%">💓</div>
+    <img id="monthImage" src="" alt="Month image" onerror="handleImgError(event)">
+  </div>
+
+  <div class="quote" id="quoteText"></div>
+  <div class="month-label" id="monthLabel">December</div>
+
+  <div class="controls">
+    <button class="btn" id="prevBtn" onclick="prevMonth()">← Prev</button>
+    <button class="btn" id="nextBtn" onclick="nextMonth()">Next →</button>
+  </div>
+</div>
+
+<script>
+const images = [
+  "images/jan.png.jpeg","images/feb.png.jpeg","images/march.png.jpeg","images/april.png.jpeg",
+  "images/may.png.jpeg","images/june.png.jpeg","images/july.png.jpeg","images/aug.png.jpeg",
+  "images/sep.png.jpeg","images/oct.png.jpeg","images/nov.png.jpeg","images/dec.png.jpeg"
+];
+
+const quotes = [
+  `✨ “From December's cozy nights to every special day ahead… our memories keep glowing.”`,
+  `“Our first picture on a winter terrace… but somehow the warmest moment I’ve ever felt with you.”`,
+  `✨ “Talking at home, sharing little looks, singing softly… even in front of everyone, it still felt like just you and me.”`,
+  `“Warm hugs from behind, lights ahead… and you in between—felt like life was glowing for us.”`,
+  `✨ “Celebrating your birthday in the temple felt less like a ritual, and more like thanking the universe for you.”`,
+  `“Watching sitarama Kalyanam together secretly felt like imagining ours one day.”`,
+  `✨ “Just cooking at home, but somehow it felt like husband-and-wife vibes already.”`,
+  `✨ “Graduation was my step forward, but your support was the reason it felt like I wasn’t walking alone.”`,
+  `💙 “Your surprises, your love, and a star gifted by my lifetime star—my birthday feels eternal in your galaxy.”`,
+  `💙 “With Ganesh Pooja and our families around, our future quietly began—may every step ahead be blessed and endless, just like this moment.”`,
+  `💙 “Amid the Ganesh Nimaran celebrations and all the joyous chaos, winning the laddu felt like a little blessing we shared together.”`,
+  `✨ “Our first movie date felt like a perfect mix of joy and magic—just like Mirai and Kanthara.”`
+];
+
+const monthNames = [
+  "December","January","February","March","April","May",
+  "June","July","August","September","October","November"
+];
+
+let current = 0;
+
+const imgEl = document.getElementById("monthImage");
+const titleEl = document.getElementById("monthTitle");
+const quoteEl = document.getElementById("quoteText");
+const labelEl = document.getElementById("monthLabel");
+const galleryBox = document.getElementById("galleryBox");
+const prevBtn = document.getElementById("prevBtn");
+
+function init(){
+  setSlide(current,true);
+  document.querySelectorAll('.floating-emoji').forEach((el,i)=>{
+    el.style.animationDelay=(i*0.3)+'s';
+    el.style.animationDuration=(5+Math.random()*4)+'s';
+  });
+}
+
+function setSlide(index,initial=false){
+  if(index<0) index=0;
+  if(index>11) index=11;
+  imgEl.classList.add("flip-exit");
+  setTimeout(()=>{
+    imgEl.classList.remove("flip-exit");
+    imgEl.classList.add("flip-enter");
+    imgEl.src=images[index];
+    titleEl.innerText=`Month ${index+1} • ${monthNames[index]}`;
+    labelEl.innerText=monthNames[index];
+    quoteEl.innerText=quotes[index];
+    setTimeout(()=>{
+      imgEl.classList.remove("flip-enter");
+      imgEl.classList.add("flip-active");
+    },20);
+    quoteEl.style.animation='none';
+    void quoteEl.offsetWidth;
+    quoteEl.style.animation='';
+  },150);
+}
+
+function nextMonth(){
+  current++;
+  if(current<12){setSlide(current); prevBtn.disabled=current===0;}
+  else{showFinalMessage();}
+}
+
+function prevMonth(){
+  if(current===0) return;
+  current--;
+  setSlide(current);
+  prevBtn.disabled=current===0;
+}
+
+function showFinalMessage(){
+  galleryBox.innerHTML=`
+    <div class="final">
+      “Happy anniversary Sai Chandu… I know you fell for me first 😉"
+      <div style="margin-top:18px;">
+        <button class="btn" onclick="yesAction()">Yes</button>
+        <button class="btn" onclick="noAction()">No</button>
+      </div>
+      <div id="finalContent" style="margin-top:16px;"></div>
+    </div>
+  `;
+}
+
+// Navigate to letter page
+function yesAction(){
+  window.location.href="letter.html";
+}
+
+// Show funny GIF
+function noAction(){
+  const finalContent=document.getElementById('finalContent');
+  finalContent.innerHTML=`<img src="images/funny.gif" style="max-width:250px;margin-top:12px;border-radius:12px;" alt="Funny no">`;
+}
+
+function handleImgError(e){
+  e.target.src='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600"><rect width="100%" height="100%" fill="#fff7fb"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins" font-size="22" fill="#c2457a">Image not found</text></svg>`);
+}
+
+init();
+</script>
+
+</body>
+</html>

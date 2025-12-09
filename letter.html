@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Letter</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#ffe6f0,#fff5fa,#ffffff);}
+  body{display:flex;flex-wrap:wrap;overflow-x:hidden;padding:10px;align-items:flex-start;justify-content:center;}
+
+  .grid{
+    flex:1 1 40%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-auto-rows:150px;
+    gap:6px;
+    padding:10px;
+    min-width:200px;
+  }
+  .grid img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(214,51,132,0.15);
+  }
+
+  .letter{
+    flex:1 1 55%;
+    position:relative;
+    padding:20px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    min-width:220px;
+  }
+  .letter-content{
+    position:relative;
+    background:rgba(255,255,255,0.7);
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 12px 40px rgba(198,68,123,0.12);
+    backdrop-filter:blur(6px);
+    width:100%;
+    height:100%;
+    overflow:auto;
+  }
+  .letter-content p{
+    font-family:'Dancing Script',cursive;
+    font-size:1.2rem;
+    color:#c21760;
+    line-height:1.5;
+    margin-bottom:12px;
+  }
+
+  /* Floating hearts */
+  .floating-heart{
+    position:absolute;
+    font-size:1.4rem;
+    opacity:0.2;
+    animation:floatLetter 5s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes floatLetter{
+    0%,100%{transform:translateY(0) scale(1);opacity:0.2}
+    50%{transform:translateY(-18px) scale(1.1);opacity:0.35}
+  }
+
+  /* Responsive adjustments */
+  @media (max-width:900px){
+    body{flex-direction:column;}
+    .grid{flex:1 1 100%; grid-template-columns:repeat(3,1fr); grid-auto-rows:120px;}
+    .letter{flex:1 1 100%; padding:15px;}
+    .grid img:nth-child(n+7){display:none;} /* Show only first 6 images */
+    .letter-content{height:auto;}
+  }
+  @media (max-width:500px){
+    .grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:120px;}
+    .letter-content p{font-size:1.1rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid">
+  <img src="images/jan.png.jpeg">
+  <img src="images/feb.png.jpeg">
+  <img src="images/march.png.jpeg">
+  <img src="images/april.png.jpeg">
+  <img src="images/may.png.jpeg">
+  <img src="images/june.png.jpeg">
+  <img src="images/july.png.jpeg">
+  <img src="images/aug.png.jpeg">
+  <img src="images/sep.png.jpeg">
+  <img src="images/oct.png.jpeg">
+  <img src="images/nov.png.jpeg">
+  <img src="images/dec.png.jpeg">
+</div>
+
+<div class="letter">
+  <div class="letter-content" id="letterContent">
+    <p>✨ My Dearest Sai Chandu,</p>
+    <p>Every moment with you this past year has been magical. From cozy winter nights to silly everyday moments, you’ve filled my life with laughter, warmth, and love.</p>
+    <p>I remember our late-night talks, sharing dreams, and even our small arguments that somehow made us stronger. Each day with you felt like discovering a new piece of happiness I never knew existed.</p>
+    <p>Through ups and downs, you have been my constant support and joy. You make every ordinary day feel extraordinary just by being yourself.</p>
+    <p>As we celebrate our memories, I promise to make countless more with you. Our love is my favorite story, and I want it to continue forever. You’re my home, my happiness, and my everything.</p>
+    <p>Every smile, every hug, every shared secret… all of it has made me fall for you more every day. You are my heart’s delight and the reason my world feels complete.</p>
+    <p>With all my heart, 💖</p>
+    <p>Your forever partner.</p>
+  </div>
+
+  <div class="floating-heart" style="top:10%; left:20%;">💖</div>
+  <div class="floating-heart" style="top:40%; left:70%;">💘</div>
+  <div class="floating-heart" style="top:70%; left:30%;">💞</div>
+  <div class="floating-heart" style="top:25%; left:50%;">💗</div>
+  <div class="floating-heart" style="top:55%; left:40%;">💓</div>
+</div>
+
+</body>
+</html>

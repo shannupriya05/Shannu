@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guess the Password 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ffd1dc, #ffe6f2 40%, #ffffff);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .emoji {
+        position: absolute;
+        font-size: 2rem;
+        opacity: 0.45;
+        animation: float 6s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); opacity: 0.3; }
+        50% { transform: translateY(-25px); opacity: 0.8; }
+        100% { transform: translateY(0px); opacity: 0.3; }
+    }
+
+    .login-box {
+        background: rgba(255,255,255,0.50);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 35px rgba(255,105,180,0.25);
+        text-align: center;
+        backdrop-filter: blur(12px);
+        width: 90%;
+        max-width: 380px;
+        animation: loginFade 1.2s ease-out;
+        position: relative;
+    }
+
+    @keyframes loginFade {
+        from { opacity: 0; transform: translateY(45px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+        font-family: 'Dancing Script', cursive;
+        font-size: 2.3rem;
+        color: #d63384;
+        margin-bottom: 15px;
+    }
+
+    .hint {
+        color: #b80f6a;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .input-container {
+        position: relative;
+        width: 90%;
+        margin: 0 90px 18px -10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px 45px 12px 15px;
+        font-size: 1rem;
+        border-radius: 12px;
+        border: 2px solid #ff8aba;
+        outline: none;
+        background: rgba(255,255,255,0.75);
+    }
+
+    .toggle-eye {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #d63384;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #ff5fa2;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #d63384;
+    }
+
+    .error {
+        color: red;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        display: none;
+    }
+
+    .heart-burst {
+        position: fixed;
+        bottom: -25px;
+        font-size: 2rem;
+        animation: heartUp 1.6s linear forwards;
+        color: #ff1493;
+        z-index: 9999;
+        opacity: 0;
+    }
+
+    @keyframes heartUp {
+        0% { transform: translateY(0) scale(0.5); opacity: 0; }
+        25% { opacity: 1; }
+        100% { transform: translateY(-125vh) scale(1.4); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translate(-50%, -45%); }
+        to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+</style>
+</head>
+<body>
+
+<!-- Background emojis -->
+<div class="emoji" style="top:10%; left:8%;">💖</div>
+<div class="emoji" style="top:20%; right:10%;">💘</div>
+<div class="emoji" style="top:70%; left:15%;">✨</div>
+<div class="emoji" style="top:80%; right:5%;">💞</div>
+<div class="emoji" style="top:40%; right:80%;">🫶</div>
+
+<div class="login-box">
+    <div class="title">Guess the Password 💕</div>
+
+    <div class="hint">
+        Hint: The name you call me 😘🔥
+    </div>
+
+    <div class="input-container">
+        <input type="password" id="password" placeholder="Enter your guess...">
+        <span class="toggle-eye" onclick="togglePassword()">👁️</span>
+    </div>
+
+    <button onclick="checkPassword()">Unlock ❤️</button>
+
+    <div id="error" class="error">Wrong password... try again my love 💗</div>
+</div>
+
+<script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+
+function burstHearts() {
+    let totalHearts = 400;
+
+    for (let i = 0; i < totalHearts; i++) {
+        let heart = document.createElement("div");
+        heart.classList.add("heart-burst");
+        heart.innerHTML = "💖";
+
+        let spread = (i / totalHearts) * 100;
+        heart.style.left = spread + "vw";
+
+        heart.style.animationDelay = (Math.random() * 0.8) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2000);
+    }
+
+    showBlastMessage();
+}
+
+function showBlastMessage() {
+    let msg = document.createElement("div");
+    msg.innerHTML = "You guessed it my love ❤️";
+    msg.style.position = "fixed";
+    msg.style.top = "50%";
+    msg.style.left = "50%";
+    msg.style.transform = "translate(-50%, -50%)";
+    msg.style.background = "rgba(255, 182, 193, 0.96)";
+    msg.style.padding = "20px 35px";
+    msg.style.borderRadius = "20px";
+    msg.style.fontSize = "1.5rem";
+    msg.style.color = "#b3005e";
+    msg.style.backdropFilter = "blur(5px)";
+    msg.style.boxShadow = "0 6px 25px rgba(255,105,180,0.45)";
+    msg.style.animation = "fadeIn 0.9s ease-out forwards";
+    msg.style.zIndex = "99999";
+    document.body.appendChild(msg);
+
+    setTimeout(() => msg.remove(), 2200);
+}
+
+function checkPassword() {
+    const correctPassword = "shannu"; 
+    const entered = document.getElementById("password").value;
+
+    if (entered.toLowerCase() === correctPassword.toLowerCase()) {
+
+        burstHearts();
+
+        setTimeout(() => {
+            window.location.href = "main.html";
+        }, 2500);
+
+    } else {
+        document.getElementById("error").style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
